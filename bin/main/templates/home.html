@@ -1,0 +1,53 @@
+<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<title>Home</title>
+	<link rel="stylesheet" href="/css/home.css"
+	th:href="@{/css/home.css}">
+	<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+	<script src="https://kit.fontawesome.com/bb81f7e50b.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="navbar navbar-dark">
+		<div class="container-fluid">
+			<div class="navbar-brand"><b>User Management</b></div>
+		<div class="navbar-text navbar-right">
+			<form sec:authorize="isAuthenticated()" id="logout" th:action="@{/logout}" method="post">
+				<!-- <span sec:authentication="principal.authorities"></span> -->
+				
+				<i class="fas fa-user-circle"></i>
+				<span sec:authentication="name">Login user</span> | 
+				<a href="javascript:{}" onclick="document.getElementById('logout').submit(); return false;">Logout</a>
+			</form>
+		</div>
+		</div>
+	</div>
+	<div class="container">
+		<table class="head-information">
+			<tr>
+				<td width="70"><i class="fas fa-user-circle" style="font-size:50px; color: #0066cc;"></i></td>
+				<td>This is your user and name for your username.<br>Use this username to login for this website.</td>
+			</tr>
+		</table>
+		<table class="table table-striped table-hover user-table" >
+			<tr>
+				<th>Id</th>
+				<th>Email</th>
+				<th>Name</th>
+			</tr>
+			<tr th:each="user: ${users}">
+				<td th:text="${user.id}"></td>
+				<td th:text="${user.email}"></td>
+				<td th:text="${user.name}"></td>
+			</tr>
+		</table>
+		<div th:include="common/pagination :: pagination" class="page d-flex justify-content-center"></div>
+	</div>
+	
+</body>
+</html>

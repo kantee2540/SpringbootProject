@@ -1,0 +1,37 @@
+<div th:fragment='pagination'>
+	<ul class='pagination'>
+		<li th:classappend="${page.firstPage}?'disabled':''" style="display: inline" class="page-item">
+			<span th:if='${page.firstPage}' class="page-link">First</span> 
+			<a th:if='${not page.firstPage}'
+			th:href='@{${page.url}(page=0,size=${page.size})}' class="page-link">First</a>
+		</li>
+		<li th:classappend="${page.hasPreviousPage}? '' : 'disabled'"
+			style="display: inline" class="page-item">
+			<span
+			th:if='${not page.hasPreviousPage}' class="page-link">&lt;</span>
+			 <a
+			th:if='${page.hasPreviousPage}'
+			th:href='@{${page.url}(page=${page.number-2},size=${page.size})}' class="page-link">&lt;</a>
+		</li>
+
+		<li th:each='item : ${page.items}'
+			th:classappend="${item.current}? 'active' : ''" class="page-item"
+			style="display: inline">
+			<span th:if='${item.current}' th:text='${item.number}' class="page-link">1</span> 
+			<a th:if='${not item.current}'
+			th:href='@{${page.url}(page=${item.number-1},size=${page.size})}'>
+				<span th:text='${item.number}' class="page-link">1</span>
+		</a>
+		</li>
+		<li th:classappend="${page.hasNextPage}? '' : 'disabled'" class="page-item"
+			style="display: inline"><span th:if='${not page.hasNextPage}' class="page-link">></span>
+			<a th:if='${page.hasNextPage}'
+			th:href='@{${page.url}(page=${page.number},size=${page.size})}' class="page-link">></a>
+		</li>
+		<li th:classappend="${page.lastPage}? 'disabled' : ''" class="page-item"
+			style="display: inline"><span th:if='${page.lastPage}' class="page-link">Last</span>
+			<a th:if='${not page.lastPage}'
+			th:href='@{${page.url}(page=${page.totalPages - 1},size=${page.size})}' class="page-link">Last</a>
+		</li>
+	</ul>
+</div>
